@@ -40,11 +40,11 @@ app.use(express.static("public"));
 
 // Routes -- ROUTES MUST COME AFTER MIDDLEWARE AND HANDLEBARS
 // =============================================================
-// const userRoutes = require("./controllers/userController");
-// app.use(userRoutes);
+const userRoutes = require("./controllers/Controller");
+app.use(userRoutes);
 
-// const frontEndRoutes = require("./controllers/frontEndController");
-// app.use(frontEndRoutes);
+const seedRoute = require("./controllers/seedController");
+app.use(seedRoute);
 
 // const followingRoutes = require("./controllers/followingController");
 // app.use(followingRoutes);
@@ -54,7 +54,7 @@ app.use(express.static("public"));
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({ force: true }).then(function () {
+db.sequelize.sync({ force: false }).then(function () {
   app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
   });

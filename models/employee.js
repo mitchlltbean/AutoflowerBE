@@ -1,12 +1,16 @@
 module.exports = function (sequelize, DataTypes) {
   var employee = sequelize.define("employee", {
-    Manager: {
+    manager: {
       type: DataTypes.BOOLEAN,
     },
+    name: {
+      type: DataTypes.STRING,
+    },
 
-    Login: {
+    login: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true,
     },
   });
 

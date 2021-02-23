@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  var sale = sequelize.define("sale", {
+  var transaction = sequelize.define("transaction", {
     ticket: {
       type: DataTypes.INTEGER,
       allnull: false,
@@ -12,5 +12,5 @@ module.exports = function (sequelize, DataTypes) {
   // linked user info
   //
   // return Test;
-  return sale;
+  return transaction;
 };

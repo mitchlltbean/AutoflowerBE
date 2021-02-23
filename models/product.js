@@ -12,6 +12,10 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allnull: true,
     },
+    price: {
+      type: DataTypes.INTEGER,
+      allnull: false,
+    },
     instock: {
       type: DataTypes.BOOLEAN,
       allnull: false,
