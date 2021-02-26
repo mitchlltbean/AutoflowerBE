@@ -4,6 +4,23 @@ const db = require("../models");
 
 
 
+router.get("/category", (req, res) => {
+  db.category
+    .findOne({
+      where: { id: req.query.id},
+      include:[db.product]
+    })
+    .then((catData) => {
+      console.log(catData, "!!!!!!!!!");
+      if (!catData) {
+        res.status(404).send("no such user");
+      } else {
+        res.json(catData);
+      }
+    });
+});
+
+
 
 
 

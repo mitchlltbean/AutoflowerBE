@@ -5,10 +5,11 @@ const db = require("../models");
 
 //TODO: create a login for admin to login from / route to admin page
 // NEED TO EXPAND WITH MANGER OR JUST EMPLOYEE WITH BOOLEAN
-router.get("/login", (req, res) => {
+router.get("/employee", (req, res) => {
   db.employee
     .findOne({
-      where: { login: req.body.login },
+      where: { login: req.query.login },
+      include:[db.order]
     })
     .then((employeeData) => {
       console.log(employeeData, "!!!!!!!!!");
