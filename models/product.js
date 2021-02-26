@@ -23,6 +23,13 @@ module.exports = function (sequelize, DataTypes) {
   });
   //Category id will be link to this model
   //price will linked to this model
+  product.associate=(models)=>{
+    product.belongsTo(models.category)
+    product.belongsToMany(models.order, {through: "order_product"})
+
+  }
+
+  
   // return Test;
   return product;
 };

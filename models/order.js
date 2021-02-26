@@ -18,7 +18,10 @@ module.exports = function (sequelize, DataTypes) {
     },
   });
   // everything gets linked to here
-  //
+  order.associate=(models)=>{
+    
+    order.belongsToMany(models.product, {through: "order_product"})
+  }
   // return Test;
   return order;
 };

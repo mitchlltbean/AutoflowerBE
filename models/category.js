@@ -5,7 +5,10 @@ module.exports = function (sequelize, DataTypes) {
       allnull: false,
     },
   });
-
+//TODO: create associaiton with product
+category.associate=(models)=>{
+  category.hasMany(models.product)
+}
   // return Test;
   return category;
 };

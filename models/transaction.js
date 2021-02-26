@@ -10,7 +10,10 @@ module.exports = function (sequelize, DataTypes) {
     },
   });
   // linked user info
-  //
+  transaction.associate=(models)=>{
+    transaction.belongsTo(models.order)
+    
+  }
   // return Test;
   return transaction;
 };
