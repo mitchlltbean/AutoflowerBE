@@ -16,11 +16,18 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allnull: false,
     },
+    status: {
+      type: DataTypes.BOOLEAN,
+      allnull: false,
+    },
+    
   });
   // everything gets linked to here
   order.associate=(models)=>{
-    
+   
     order.belongsToMany(models.product, {through: "order_product"})
+    order.belongsTo(models.employee)
+    order.belongsTo(models.user)
   }
   // return Test;
   return order;

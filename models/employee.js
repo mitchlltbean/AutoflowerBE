@@ -15,5 +15,11 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   // return Test;
+  employee.associate=(models)=>{
+    employee.hasMany(models.order)
+   
+  }
+
+
   return employee;
 };

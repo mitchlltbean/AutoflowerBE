@@ -5,7 +5,7 @@ module.exports = function (sequelize, DataTypes) {
       allnull: false,
     },
     phone: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allnull: false,
     },
     email: {
@@ -16,5 +16,9 @@ module.exports = function (sequelize, DataTypes) {
   //
   //
   // return Test;
+  user.associate=(models)=>{
+    user.hasMany(models.order)
+
+  }
   return user;
 };

@@ -26,7 +26,7 @@ module.exports = function (sequelize, DataTypes) {
   product.associate=(models)=>{
     product.belongsTo(models.category)
     product.belongsToMany(models.order, {through: "order_product"})
-
+    
   }
 
   

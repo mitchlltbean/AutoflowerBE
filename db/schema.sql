@@ -1,5 +1,7 @@
 CREATE DATABASE AutoFlower;
 USE AutoFlower;
 
-INSERT INTO products (flavor, price, quantity)
-VALUES ("vanilla", 2.50, 100);
+INSERT INTO products (item, img, description, price, instock)
+VALUES ("Flower 1", "", "indica, from WA", 20.00, 100), ;
+
+

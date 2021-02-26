@@ -36,10 +36,10 @@ router.post("/product", function (req, res) {
       item: req.body.item,
       img: req.body.img,
       description: req.body.description,
-      category: req.body.category,
+      categoryId: req.body.categoryId,
       instock: req.body.instock,
       price: req.body.price,
-      size: req.body.size,
+     
     })
     .then((data) => {
       res.json(data);
@@ -48,5 +48,55 @@ router.post("/product", function (req, res) {
       res.status(500).json(err);
     });
 });
+
+router.post("/order", function (req, res) {
+  db.order
+    .create({
+      total: req.body.total,
+      subtotal: req.body.subtotal,
+      tax: req.body.tax,
+      stateTax: req.body.stateTax,
+      status:req.body.status
+    })
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+
+
+
+router.post("/transaction", function (req, res) {
+  db.transaction
+    .create({
+      ticket: req.body.ticket,
+      status: req.body.status,
+    })
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+
+
+router.post("/user", function (req, res) {
+  db.user
+    .create({
+      name: req.body.name,
+      phone: req.body.phone,
+      email: req.body.email,
+    })
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+
 
 module.exports = router;

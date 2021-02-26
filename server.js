@@ -46,11 +46,6 @@ app.use(userRoutes);
 const seedRoute = require("./controllers/seedController");
 app.use(seedRoute);
 
-// const followingRoutes = require("./controllers/followingController");
-// app.use(followingRoutes);
-
-// const searchRoutes = require("./controllers/searchController");
-// app.use(searchRoutes);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
