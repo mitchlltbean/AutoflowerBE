@@ -52,6 +52,9 @@ app.use(orderRoutes);
 const productRoutes = require("./controllers/product");
 app.use(productRoutes);
 
+const taxRoutes = require("./controllers/tax");
+app.use(taxRoutes);
+
 const userRoutes = require("./controllers/user");
 app.use(userRoutes);
 
