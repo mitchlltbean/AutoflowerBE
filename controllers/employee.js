@@ -20,4 +20,19 @@ router.get("/login", (req, res) => {
     });
 });
 
+router.post("/create", (req, res) => {
+    db.employee
+      .create({
+        login: req.body.login,
+        manager: req.body.manager,
+        name: req.body.name,
+      })
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => {
+        res.status(500).json(err);
+      });
+  });
+
 module.exports = router;

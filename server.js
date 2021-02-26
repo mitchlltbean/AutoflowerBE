@@ -40,11 +40,24 @@ app.use(express.static("public"));
 
 // Routes -- ROUTES MUST COME AFTER MIDDLEWARE AND HANDLEBARS
 // =============================================================
-const userRoutes = require("./controllers/Controller");
+const categoryRoutes = require("./controllers/category");
+app.use(categoryRoutes);
+
+const employeeRoutes = require("./controllers/employee");
+app.use(employeeRoutes);
+
+const orderRoutes = require("./controllers/order");
+app.use(orderRoutes);
+
+const productRoutes = require("./controllers/product");
+app.use(productRoutes);
+
+const userRoutes = require("./controllers/user");
 app.use(userRoutes);
 
-const seedRoute = require("./controllers/seedController");
-app.use(seedRoute);
+
+// const seedRoute = require("./controllers/seedController");
+// app.use(seedRoute);
 
 
 // Syncing our sequelize models and then starting our Express app
