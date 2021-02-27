@@ -1,39 +1,84 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
+
+// const authenticateMe = (req) => {
+//   let token = false;
+
+//   if (!req.headers) {
+//       token = false
+//   }
+//   else if (!req.headers.authorization) {
+//       token = false;
+//   }
+//   else {
+//       token = req.headers.authorization.split(" ")[1];
+//   }
+//   let data = false;
+//   if (token) {
+//       data = jwt.verify(token, "mitchell", (err, data) => {
+//           if (err) {
+//               return false;
+//           } else {
+//               return data
+//           }
+//       })
+//   }
+//   return data;
+// }
 //TODO: create a login for admin to login from / route to admin page
 // NEED TO EXPAND WITH MANGER OR JUST EMPLOYEE WITH BOOLEAN
-router.get("/employee", (req, res) => {
-  db.employee
-    .findOne({
-      where: { login: req.query.login },
-      include:[db.order]
-    })
-    .then((employeeData) => {
-      console.log(employeeData, "!!!!!!!!!");
-      if (!employeeData) {
-        res.status(404).send("no such user");
-      } else {
-        res.json(employeeData);
-      }
-    });
-});
 
 router.post("/create", (req, res) => {
-    db.employee
-      .create({
-        login: req.body.login,
-        manager: req.body.manager,
-        name: req.body.name,
-      })
-      .then((data) => {
-        res.json(data);
-      })
-      .catch((err) => {
-        res.status(500).json(err);
-      });
-  });
+  db.employee.create(req.body).then(newEmployee => {
+      const token = jwt.sign({
+          manager: newEmployee.manager,
+          name: newEmployee.name,
+          login: newEmployee.login,
+          
+          
+      }, "mitchell",
+          {
+              expiresIn: "2h"
+          })
+      return res.json({ employee: newEmployee, token })
+  }).catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+  })
+})
+
+
+router.post("/login", (req, res) => {
+  db.employee
+  .findOne({
+    where: { name: req.body.name },
+    include:[db.order]
+  }).then(employee => {
+    console.log(employee)
+      if (!employee) {
+          return res.status(404).send('no such user')
+      }
+      else if (bcrypt.compareSync(req.body.login, employee.login)) {
+          const token = jwt.sign({
+              manager: employee.manager,
+              name: employee.name,
+             id: employee.id
+          }, "mitchell",
+              {
+                  expiresIn: "2h"
+              })
+          return res.json({ employee, token })
+      }
+      else {
+          return res.status(403).send('wrong password')
+      }
+  })
+})
+
+
 
 module.exports = router;
