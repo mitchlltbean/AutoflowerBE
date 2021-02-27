@@ -1,32 +1,54 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
+const jwt = require("jsonwebtoken");
 
+const authenticateMe = (req) => {
+  let token = false;
 
-
-router.get("/category", (req, res) => {
-  db.category
-    .findOne({
-      where: { id: req.query.id},
-      include:[db.product]
-    })
-    .then((catData) => {
-      console.log(catData, "!!!!!!!!!");
-      if (!catData) {
-        res.status(404).send("no such user");
+  if (!req.headers) {
+    token = false;
+  } else if (!req.headers.authorization) {
+    token = false;
+  } else {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  let data = false;
+  if (token) {
+    data = jwt.verify(token, "mitchell", (err, data) => {
+      if (err) {
+        return false;
       } else {
-        res.json(catData);
+        return data;
       }
     });
+  }
+  return data;
+};
+
+router.get("/category", (req, res) => {
+  const employeeData = authenticateMe(req);
+  if (!employeeData) {
+    res.status(403).send("login please");
+  } else {
+    db.category
+      .findOne({
+        where: { id: req.query.id },
+        include: [db.product],
+      })
+      .then((catData) => {
+        console.log(catData, "!!!!!!!!!");
+
+        res.json(catData);
+      });
+  }
 });
 
-
-
-
-
-
-
 router.post("/category", function (req, res) {
+  const employeeData = authenticateMe(req);
+  if (!employeeData) {
+    res.status(403).send("login please");
+  } else {
     db.category
       .create({
         group: req.body.group,
@@ -37,8 +59,7 @@ router.post("/category", function (req, res) {
       .catch((err) => {
         res.status(500).json(err);
       });
-  });
+  }
+});
 
-
-  
 module.exports = router;

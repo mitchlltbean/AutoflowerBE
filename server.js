@@ -58,14 +58,12 @@ app.use(taxRoutes);
 const userRoutes = require("./controllers/user");
 app.use(userRoutes);
 
-
-// const seedRoute = require("./controllers/seedController");
-// app.use(seedRoute);
-
+const seedRoute = require("./controllers/seedController");
+app.use(seedRoute);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({ force: false}).then(function () {
+db.sequelize.sync({ force: false }).then(function () {
   app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
   });

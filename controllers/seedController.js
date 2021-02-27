@@ -1,21 +1,21 @@
-// const express = require("express");
-// const router = express.Router();
-// const db = require("../models");
+const express = require("express");
+const router = express.Router();
+const db = require("../models");
 
-// router.post("/create", (req, res) => {
-//   db.employee
-//     .create({
-//       login: req.body.login,
-//       manager: req.body.manager,
-//       name: req.body.name,
-//     })
-//     .then((data) => {
-//       res.json(data);
-//     })
-//     .catch((err) => {
-//       res.status(500).json(err);
-//     });
-// });
+router.post("/signup", (req, res) => {
+  db.employee
+    .create({
+      login: req.body.login,
+      manager: req.body.manager,
+      name: req.body.name,
+    })
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
 
 // router.post("/category", function (req, res) {
 //   db.category
@@ -39,7 +39,7 @@
 //       categoryId: req.body.categoryId,
 //       instock: req.body.instock,
 //       price: req.body.price,
-     
+
 //     })
 //     .then((data) => {
 //       res.json(data);
@@ -66,8 +66,6 @@
 //     });
 // });
 
-
-
 // router.post("/transaction", function (req, res) {
 //   db.transaction
 //     .create({
@@ -81,7 +79,6 @@
 //       res.status(500).json(err);
 //     });
 // });
-
 
 // router.post("/user", function (req, res) {
 //   db.user
@@ -98,5 +95,4 @@
 //     });
 // });
 
-
-// module.exports = router;
+module.exports = router;
