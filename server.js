@@ -41,22 +41,22 @@ app.use(express.static("public"));
 // Routes -- ROUTES MUST COME AFTER MIDDLEWARE AND HANDLEBARS
 // =============================================================
 const categoryRoutes = require("./controllers/category");
-app.use(categoryRoutes);
+app.use("/api/category", categoryRoutes);
 
 const employeeRoutes = require("./controllers/employee");
-app.use(employeeRoutes);
+app.use("/api/employee", employeeRoutes);
 
 const orderRoutes = require("./controllers/order");
-app.use(orderRoutes);
+app.use("/api/order", orderRoutes);
 
 const productRoutes = require("./controllers/product");
-app.use(productRoutes);
+app.use("/api/product", productRoutes);
 
 const taxRoutes = require("./controllers/tax");
-app.use(taxRoutes);
+app.use("/api/tax", taxRoutes);
 
 const userRoutes = require("./controllers/user");
-app.use(userRoutes);
+app.use("/api/category", userRoutes);
 
 const seedRoute = require("./controllers/seedController");
 app.use(seedRoute);
