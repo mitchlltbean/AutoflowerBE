@@ -4,11 +4,19 @@ const URL_PREFIX = "http://localhost:8080";
 
 const API = {
   login: (employeeData) => {
-    return axios.post(`${URL_PREFIX}/login`, employeeData);
+    return axios.post(`${URL_PREFIX}/api/login`, employeeData);
   },
 
-  signup: (employeeData, token) => {
-    return axios.post(`${URL_PREFIX}/signup`, {
+  create: (employeeData, token) => {
+    return axios.post(`${URL_PREFIX}/api/signup`, employeeData, {
+      headers: {
+        authorization: `Bearer: ${token}`,
+      },
+    });
+  },
+
+  getAllemployees: (id, token) => {
+    return axios.get(`${URL_PREFIX}/api/employees`, {
       headers: {
         authorization: `Bearer: ${token}`,
       },
@@ -23,8 +31,8 @@ const API = {
     });
   },
 
-  getSingleCategoryWithProducts: (id, token) => {
-    return axios.get(`${URL_PREFIX}/api/category/${id}/products`, {
+  getSingleCategoryWithProducts: (group, token) => {
+    return axios.get(`${URL_PREFIX}/api/category/${group}/products`, {
       headers: {
         authorization: `Bearer: ${token}`,
       },
