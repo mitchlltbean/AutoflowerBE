@@ -4,30 +4,28 @@ const db = require("../models");
 // const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-// const authenticateMe = (req) => {
-//   let token = false;
+const authenticateMe = (req) => {
+  let token = false;
 
-//   if (!req.headers) {
-//       token = false
-//   }
-//   else if (!req.headers.authorization) {
-//       token = false;
-//   }
-//   else {
-//       token = req.headers.authorization.split(" ")[1];
-//   }
-//   let data = false;
-//   if (token) {
-//       data = jwt.verify(token, "mitchell", (err, data) => {
-//           if (err) {
-//               return false;
-//           } else {
-//               return data
-//           }
-//       })
-//   }
-//   return data;
-// }
+  if (!req.headers) {
+    token = false;
+  } else if (!req.headers.authorization) {
+    token = false;
+  } else {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  let data = false;
+  if (token) {
+    data = jwt.verify(token, "mitchell", (err, data) => {
+      if (err) {
+        return false;
+      } else {
+        return data;
+      }
+    });
+  }
+  return data;
+};
 
 router.get("/user", (req, res) => {
   db.user
