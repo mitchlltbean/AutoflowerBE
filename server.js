@@ -8,6 +8,9 @@ const cors = require("cors");
 const express = require("express");
 // const session = require("express-session");
 
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 // Sets up the Express App
 // =============================================================
 const app = express();
@@ -42,6 +45,7 @@ app.use(express.static("public"));
 
 // Routes -- ROUTES MUST COME AFTER MIDDLEWARE AND HANDLEBARS
 // =============================================================
+
 const categoryRoutes = require("./controllers/category");
 app.use("/api/category", categoryRoutes);
 

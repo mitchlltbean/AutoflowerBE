@@ -94,8 +94,8 @@ router.get("/employees", (req, res) => {
   } else {
     db.employee
       .findAll()
-      .then((tanks) => {
-        res.json(tanks);
+      .then((employees) => {
+        res.json(employees);
       })
       .catch((err) => {
         console.log(err);
