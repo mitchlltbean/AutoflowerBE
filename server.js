@@ -4,6 +4,7 @@
 // ******************************************************************************
 // *** Dependencies
 // =============================================================
+const cors = require("cors");
 const express = require("express");
 // const session = require("express-session");
 
@@ -19,6 +20,7 @@ const db = require("./models");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(cors());
 // app.use(
 //   session({
 //     secret: process.env.SESSION_SECRET,
@@ -56,10 +58,10 @@ const taxRoutes = require("./controllers/tax");
 app.use("/api/tax", taxRoutes);
 
 const userRoutes = require("./controllers/user");
-app.use("/api/category", userRoutes);
+app.use("/api/user", userRoutes);
 
-const seedRoute = require("./controllers/seedController");
-app.use(seedRoute);
+// const seedRoute = require("./controllers/seedController");
+// app.use(seedRoute);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================

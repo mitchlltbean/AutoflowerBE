@@ -46,6 +46,7 @@ router.get("/category", (req, res) => {
 
 router.post("/category", function (req, res) {
   const employeeData = authenticateMe(req);
+  console.log(employeeData, "!!@@!@!@!@!!@");
   if (!employeeData) {
     res.status(403).send("login please");
   } else {
