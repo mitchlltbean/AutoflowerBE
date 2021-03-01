@@ -31,31 +31,31 @@ const authenticateMe = (req) => {
 // NEED TO EXPAND WITH MANGER OR JUST EMPLOYEE WITH BOOLEAN
 
 router.post("/create", (req, res) => {
-  const employeeData = authenticateMe(req);
-  if (!employeeData) {
-    res.status(403).send("login please");
-  } else {
-    db.employee
-      .create(req.body)
-      .then((newEmployee) => {
-        const token = jwt.sign(
-          {
-            manager: newEmployee.manager,
-            name: newEmployee.name,
-            login: newEmployee.login,
-          },
-          "mitchell",
-          {
-            expiresIn: "199h",
-          }
-        );
-        return res.json({ employee: newEmployee, token });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-  }
+  // const employeeData = authenticateMe(req);
+  // if (!employeeData) {
+  //   res.status(403).send("login please");
+  // } else {
+  db.employee
+    .create(req.body)
+    .then((newEmployee) => {
+      const token = jwt.sign(
+        {
+          manager: newEmployee.manager,
+          name: newEmployee.name,
+          login: newEmployee.login,
+        },
+        "mitchell",
+        {
+          expiresIn: "199h",
+        }
+      );
+      return res.json({ employee: newEmployee, token });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+  // }
 });
 
 router.post("/login", (req, res) => {
