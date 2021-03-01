@@ -110,7 +110,40 @@ router.post("/product", function (req, res) {
   }
 });
 
-router.delete("/deleteinventory", (req, res) => {
+router.put("/productupdate", function (req, res) {
+  db.product
+    .update(req.body, {
+      where: {
+        id: req.body.id,
+      },
+    })
+    .then(function (updateProduct) {
+      res.json(updateProduct);
+    });
+});
+
+// router.delete("/deleteinventory/:id", (req, res) => {
+//   const employeeData = authenticateMe(req);
+//   if (!employeeData) {
+//     res.status(403).send("login please");
+//   } else {
+//     db.product
+//       .destroy({
+//         where: {
+//           id: req.params.id,
+//         },
+//       })
+//       .then((delProduct) => {
+//         res.json(delProduct);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         res.status(500).json(err);
+//       });
+//   }
+// });
+
+router.delete("/deleteinventory/:id", (req, res) => {
   const employeeData = authenticateMe(req);
   if (!employeeData) {
     res.status(403).send("login please");
@@ -122,19 +155,23 @@ router.delete("/deleteinventory", (req, res) => {
         },
       })
       .then((product) => {
-        db.product
-          .destroy({
-            where: {
-              id: req.params.id,
-            },
-          })
-          .then((delProduct) => {
-            res.json(delProduct);
-          })
-          .catch((err) => {
-            console.log(err);
-            res.status(500).json(err);
-          });
+        if (product.id === product.id) {
+          db.product
+            .destroy({
+              where: {
+                id: req.params.id,
+              },
+            })
+            .then((delProduct) => {
+              res.json(delProduct);
+            })
+            .catch((err) => {
+              console.log(err);
+              res.status(500).json(err);
+            });
+        } else {
+          res.status(403).send("no good");
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -142,5 +179,31 @@ router.delete("/deleteinventory", (req, res) => {
       });
   }
 });
+
+// router.delete("/deleteinventory/:id", function (req, res) {
+//   const employeeData = authenticateMe(req);
+//   if (!employeeData) {
+//     res.status(403).send("login please");
+//   } else { db.product
+//           .findOne({
+//             where: {
+//               id: req.params.id,
+//             },
+//           })
+//     db.product
+//       .destroy({
+//         where: {
+//           id: req.params.id,
+//         },
+//       })
+//       .then(function (delProduct) {
+//         res.json(delProduct);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         res.status(500).json(err);
+//       });
+//   }
+// });
 
 module.exports = router;
