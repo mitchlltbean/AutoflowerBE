@@ -33,7 +33,7 @@ router.get("/category", (req, res) => {
   } else {
     db.category
       .findOne({
-        where: { id: req.query.id },
+        where: { group: req.body.group },
         include: [db.product],
       })
       .then((catData) => {

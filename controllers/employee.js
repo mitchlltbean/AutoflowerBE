@@ -46,7 +46,7 @@ router.post("/create", (req, res) => {
           },
           "mitchell",
           {
-            expiresIn: "2h",
+            expiresIn: "199h",
           }
         );
         return res.json({ employee: newEmployee, token });
@@ -77,7 +77,7 @@ router.post("/login", (req, res) => {
           },
           "mitchell",
           {
-            expiresIn: "2h",
+            expiresIn: "199h",
           }
         );
         return res.json({ employee, token });
@@ -95,6 +95,7 @@ router.get("/employees", (req, res) => {
     db.employee
       .findAll()
       .then((employees) => {
+        console.log(employees, "EMPLOYEES");
         res.json(employees);
       })
       .catch((err) => {
