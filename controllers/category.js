@@ -26,21 +26,16 @@ const authenticateMe = (req) => {
   return data;
 };
 
-router.get("/category", (req, res) => {
+router.get("/allcategories", (req, res) => {
   const employeeData = authenticateMe(req);
   if (!employeeData) {
     res.status(403).send("login please");
   } else {
-    db.category
-      .findOne({
-        where: { group: req.body.group },
-        include: [db.product],
-      })
-      .then((catData) => {
-        console.log(catData, "!!!!!!!!!");
+    db.category.findAll({}).then((catData) => {
+      console.log(catData, "!!!!!!!!!");
 
-        res.json(catData);
-      });
+      res.json(catData);
+    });
   }
 });
 

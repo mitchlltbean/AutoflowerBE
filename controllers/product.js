@@ -47,6 +47,27 @@ router.get("/product", (req, res) => {
   }
 });
 
+router.get("/productsbycategory", (req, res) => {
+  const employeeData = authenticateMe(req);
+  if (!employeeData) {
+    res.status(403).send("login please");
+  } else {
+    db.category
+      .findOne({
+        where: { id: req.query.id },
+        include: [db.product],
+      })
+      .then((productData) => {
+        console.log(productData, "!!!!!!!!!");
+        if (!productData) {
+          res.status(404).send("no such user");
+        } else {
+          res.json(productData);
+        }
+      });
+  }
+});
+
 router.get("/products", (req, res) => {
   const employeeData = authenticateMe(req);
   if (!employeeData) {
