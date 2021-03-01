@@ -15,7 +15,8 @@ const jwt = require("jsonwebtoken");
 // =============================================================
 const app = express();
 const PORT = process.env.PORT || 8080;
-// require("dotenv").config();
+require("dotenv").config();
+console.log(process.env);
 // Requiring our models for syncing
 const db = require("./models");
 
