@@ -2,6 +2,7 @@ const router = require("express").Router();
 const axios = require("axios");
 var convert = require("xml-js");
 const jwt = require("jsonwebtoken");
+const name = process.env.name;
 
 const authenticateMe = (req) => {
   let token = false;
@@ -15,7 +16,7 @@ const authenticateMe = (req) => {
   }
   let data = false;
   if (token) {
-    data = jwt.verify(token, "mitchell", (err, data) => {
+    data = jwt.verify(token, name, (err, data) => {
       if (err) {
         return false;
       } else {

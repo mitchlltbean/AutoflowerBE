@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../models");
 const jwt = require("jsonwebtoken");
+const name = process.env.name;
 
 const authenticateMe = (req) => {
   let token = false;
@@ -15,7 +16,7 @@ const authenticateMe = (req) => {
   }
   let data = false;
   if (token) {
-    data = jwt.verify(token, "mitchell", (err, data) => {
+    data = jwt.verify(token, name, (err, data) => {
       if (err) {
         return false;
       } else {
@@ -104,6 +105,55 @@ router.post("/product", function (req, res) {
         res.json(data);
       })
       .catch((err) => {
+        res.status(500).json(err);
+      });
+  }
+});
+
+router.put("/productupdate", function (req, res) {
+  db.product
+    .update(req.body, {
+      where: {
+        id: req.body.id,
+      },
+    })
+    .then(function (updateProduct) {
+      res.json(updateProduct);
+    });
+});
+
+router.delete("/deleteinventory/:id", (req, res) => {
+  const employeeData = authenticateMe(req);
+  if (!employeeData) {
+    res.status(403).send("login please");
+  } else {
+    db.product
+      .findOne({
+        where: {
+          id: req.params.id,
+        },
+      })
+      .then((product) => {
+        if (product.id === product.id) {
+          db.product
+            .destroy({
+              where: {
+                id: req.params.id,
+              },
+            })
+            .then((delProduct) => {
+              res.json(delProduct);
+            })
+            .catch((err) => {
+              console.log(err);
+              res.status(500).json(err);
+            });
+        } else {
+          res.status(403).send("no good");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         res.status(500).json(err);
       });
   }

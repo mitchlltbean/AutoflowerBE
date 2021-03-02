@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const name = process.env.name;
 
 const authenticateMe = (req) => {
   let token = false;
@@ -16,7 +17,7 @@ const authenticateMe = (req) => {
   }
   let data = false;
   if (token) {
-    data = jwt.verify(token, "mitchell", (err, data) => {
+    data = jwt.verify(token, name, (err, data) => {
       if (err) {
         return false;
       } else {
@@ -105,4 +106,40 @@ router.get("/employees", (req, res) => {
   }
 });
 
+router.delete("/deleteemployee/:id", (req, res) => {
+  const employeeData = authenticateMe(req);
+  if (!employeeData) {
+    res.status(403).send("login please");
+  } else {
+    db.employee
+      .findOne({
+        where: {
+          id: req.params.id,
+        },
+      })
+      .then((employee) => {
+        if (employee.id === employee.id) {
+          db.employee
+            .destroy({
+              where: {
+                id: req.params.id,
+              },
+            })
+            .then((delEmployee) => {
+              res.json(delEmployee);
+            })
+            .catch((err) => {
+              console.log(err);
+              res.status(500).json(err);
+            });
+        } else {
+          res.status(403).send("no good");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  }
+});
 module.exports = router;
