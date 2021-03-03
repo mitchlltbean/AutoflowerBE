@@ -69,7 +69,7 @@ router.post("/login", (req, res) => {
       console.log(employee);
       if (!employee) {
         return res.status(404).send("no such user");
-      } else if (bcrypt.compareSync(req.body.login, employee.login)) {
+      } else if (req.body.login === employee.login) {
         const token = jwt.sign(
           {
             manager: employee.manager,
