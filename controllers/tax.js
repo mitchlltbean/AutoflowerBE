@@ -28,7 +28,6 @@ const authenticateMe = (req) => {
 };
 
 router.post("/tax", (req, res) => {
-  console.log(req.body, "@@@@@@@");
   const employeeData = authenticateMe(req);
   if (!employeeData) {
     res.status(403).send("login please");
